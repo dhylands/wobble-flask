@@ -1,7 +1,5 @@
 """Flask Hello World App"""
 
-import yaml
-
 from flask_sock import Sock
 from flask import Flask
 
