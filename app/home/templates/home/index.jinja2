@@ -1,0 +1,23 @@
+{% extends "layout.jinja2" %}
+
+{% block pagestyles %}
+{% endblock %}
+
+{% block content %}
+  {% include "navigation.jinja2" %}
+
+  <div class="content-top">
+    <h1>{{ title }}</h1>
+    <h2>{{ subtitle }}</h2>
+    <div class="resource-links">
+      <p class="resource-link">Github repo <a href="https://github.com/dhylands/wobble">here.</a></p>
+    </div>
+  </div>
+
+  <div class="content">
+  <p>Page Content goes here</p>
+  </div>
+
+ {% include "blueprintinfo.jinja2" %}
+
+{% endblock %}

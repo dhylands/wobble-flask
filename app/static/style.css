@@ -1,0 +1,39 @@
+html {
+  font-size: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+  background: #d3d3d3
+}
+
+nav {
+  font-size: 150%;
+  a {
+    color: #222;
+    text-decoration: none;
+  }
+}
+
+.content, .content-top, .blueprint-info {
+	margin: 20px;
+  border: 1px solid black;
+  padding: 20px;
+}
+
+.content-top {
+  text-align: center;
+}
+
+.nav-wrapper {
+  margin-bottom: 50px;
+  background: #d3d3d3 url(/static/Background.jpg) repeat scroll top left;
+  border-bottom: 1px solid #eee;
+  padding: 20px 0;
+  text-align: center;
+}

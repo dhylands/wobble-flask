@@ -1,0 +1,130 @@
+{% extends "layout.jinja2" %}
+
+{% block pagestyles %}
+{% endblock %}
+
+{% block content %}
+  {% include "navigation.jinja2" %}
+
+  <div class="content-top">
+    <h1>{{ title }}</h1>
+  </div>
+
+  <div class="content">
+    <canvas id="canvas"></canvas>
+  </div>
+  <div id="log"></div>
+
+
+ {% include "blueprintinfo.jinja2" %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    charing = false;
+    const config = {
+        type: 'line',
+        data: {
+            labels: Array(30).fill("0.000"),
+            datasets: [{
+                label: "Random Dataset",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: Array(30).fill(null),
+                fill: false,
+                tension: 0,
+            }],
+        },
+        options: {
+            interpolateNulls: true,
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Random Data'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value'
+                    }
+                }]
+            }
+        }
+    };
+
+    const log = (text, color) => {
+      document.getElementById('log').innerHTML += `<span style="color: ${color}">${text}</span><br>`;
+    };
+
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    const lineChart = new Chart(context, config);
+    socket = null;
+
+    function add_chart_data(data) {
+      if (config.data.labels.length === 30) {
+          config.data.labels.shift();
+          config.data.datasets[0].data.shift();
+      }
+      config.data.labels.push(data.time);
+      config.data.datasets[0].data.push(data.value);
+      lineChart.update();
+    }
+
+    function stop_chart() {
+      if (charting) {
+        add_chart_data({time: '', value: null});
+        charting = false;
+        socket.close();
+      }
+    }
+
+    function start_chart() {
+        socket = new WebSocket('ws://' + location.host + '/chart-data');
+        socket.addEventListener('message', ev => {
+            // log('<<< ' + ev.data, 'blue');
+            const data = JSON.parse(ev.data);
+            add_chart_data(data);
+        });
+        socket.addEventListener('close', ev => {
+          stop_chart();
+        });
+        socket.addEventListener('error', ev => {
+          stop_chart();
+        });
+      charting = true;
+    }
+
+    function content_loaded() {
+      canvas.addEventListener('click', ev => {
+        if (charting) {
+          stop_chart();
+        } else {
+          start_chart();
+        }
+      });
+      start_chart();
+    }
+
+    document.addEventListener('DOMContentLoaded', content_loaded, false);
+</script>
+
+{% endblock %}

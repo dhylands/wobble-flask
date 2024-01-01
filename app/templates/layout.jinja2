@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>{{ title }} | Wobble - 2 wheeled balacing robot</title>
+  <meta name="description" content="Wobble - a 2 wheeled balancing robot"/>
+  <meta name="HandheldFriendly" content="True"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#5eb9d7"/>
+  <!link rel="shortcut icon" href="{{ url_for('static', filename='dist/img/favicon@2x.png') }}" type="image/x-icon"/>
+  <link href="/static/style.css" rel="stylesheet" type="text/css"/>
+  {% block pagestyles %}{% endblock %}
+</head>
+
+<body class="{{ template }}">
+  {% block content %}{% endblock %}
+</body>
+
+</html>

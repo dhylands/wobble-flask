@@ -1,5 +1,5 @@
 flask
-flask-sock
+flask_sock
 pylint
 pyyaml
 yapf
