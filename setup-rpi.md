@@ -32,11 +32,19 @@ to get Wifi working (see additional steps below).
 
 ## Enable serial console
 
-After flashing the image, I remounted the SDcard on my linux system and added the following to `/boot/config.txt`:
+After flashing the image, I remounted the SDcard on my linux system and added the following to `/boot/config.txt` for the Pi3:
 ```
 enable_uart=1
 dtoverlay=pi3-disable-bt
+dtoverlay=pi3-disable-wifi
 ```
+
+For the PiZero - I used I was able to get WiFi to work, so I used this instead:
+```
+enable_uart=1
+dtoverlay=disable-bt
+```
+
 This will enable the UART, and disable Bluetooth.
 
 I also edited `/boot/cmdline.txt` and removed `quiet` so I could see the kernel boot messages on the serial console.
