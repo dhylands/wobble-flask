@@ -34,12 +34,10 @@ to get Wifi working (see additional steps below).
 
 After flashing the image, I remounted the SDcard on my linux system and added the following to `/boot/config.txt`:
 ```
-enable_uaet=1
-enable_uaet=1
+enable_uart=1
 dtoverlay=pi3-disable-bt
-dtoverlay=pi3-disable-wifi
 ```
-This will enable the UART, and disable Bluetooth and WiFi.
+This will enable the UART, and disable Bluetooth.
 
 I also edited `/boot/cmdline.txt` and removed `quiet` so I could see the kernel boot messages on the serial console.
 
@@ -64,7 +62,7 @@ update_config=1
 country=CA
 
 network={
-        ssid="Dream-Catcher"
+        ssid="***Enter WiFi SSID here***"
         psk="***Enter WiFi Password here***"
 }
 ```
